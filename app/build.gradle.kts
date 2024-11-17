@@ -1,11 +1,13 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.dagger.hilt)
+    id("kotlin-kapt")
 }
 
 android {
     namespace = "com.example.tumovieapp"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.tumovieapp"
@@ -59,6 +61,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    //implementation(libs.androidx.material3.jvmstubs)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -68,5 +71,34 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // Room
-    implementation(libs.androidx.room.ktx)
+    implementation (libs.androidx.room.runtime)
+    implementation (libs.androidx.room.ktx)  // Si usas Kotlin
+
+    // Si usas Kotlin
+    //kapt (libs.androidx.room.compiler)
+
+
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.compose) // Soporte para Jetpack Compose
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.moshi)
+    
+    implementation(libs.moshi.core)
+    implementation(libs.moshi.kotlin)
+
+    // Coil
+    implementation(libs.coil.compose)
+
+    // Excluir las anotaciones antiguas de todas las dependencias
+    configurations.all {
+        exclude(group = "com.intellij", module = "annotations")
+    }
+
+}
+
+kapt {
+    correctErrorTypes = true
 }
