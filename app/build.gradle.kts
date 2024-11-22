@@ -42,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.7"
     }
     packaging {
         resources {
@@ -50,6 +50,20 @@ android {
         }
     }
 }
+
+kapt {
+    javacOptions {
+        option("-source", "11")
+        option("-target", "11")
+    }
+    correctErrorTypes = true
+}
+
+configurations.all {
+    exclude(group = "com.sun", module = "tools")
+}
+
+
 
 dependencies {
 
@@ -73,9 +87,7 @@ dependencies {
     // Room
     implementation (libs.androidx.room.runtime)
     implementation (libs.androidx.room.ktx)  // Si usas Kotlin
-
-    // Si usas Kotlin
-    //kapt (libs.androidx.room.compiler)
+    kapt (libs.androidx.room.compiler)
 
 
     // Hilt
@@ -92,13 +104,4 @@ dependencies {
     // Coil
     implementation(libs.coil.compose)
 
-    // Excluir las anotaciones antiguas de todas las dependencias
-    configurations.all {
-        exclude(group = "com.intellij", module = "annotations")
-    }
-
-}
-
-kapt {
-    correctErrorTypes = true
 }

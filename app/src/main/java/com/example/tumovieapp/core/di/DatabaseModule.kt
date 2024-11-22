@@ -21,10 +21,10 @@ object DatabaseModule {
         @ApplicationContext context: Context
     ): AppDatabase {
         return Room.databaseBuilder(
-            context.applicationContext, // Usar applicationContext para evitar fugas de memoria
+            context.applicationContext,
             AppDatabase::class.java,
             "movie_database"
-        ).fallbackToDestructiveMigration() // Opcional, para manejar cambios en el esquemaçç
+        ).fallbackToDestructiveMigration()
         .build()
     }
 
